@@ -17,16 +17,7 @@ app.listen(port, () => {
     console.log("server is running")
 })
 
-app.get("/", (req,res) => {
-    res.send("Server On")
-})
-
-app.get("/plants", async (req,res) => {
-  const plant = await Plant.find();
-  res.json(plant).status(200);
-})
-
-app.get("/test", async (req,res) => {
+app.get("/", async (req,res) => {
     
     const result = await Plant.nv.find();
     const result1 = await Plant.ut.find();
@@ -56,6 +47,24 @@ app.post("/plants/WY", async (req,res) => {
     res.json(savedPlants).status(200);;
 })
 
+app.post("/plants/add/NV", async (req,res) => {
+    const plants = req.body;
+    const savedPlants = await Plant.nv.insertMany(plants);
+    res.json(savedPlants).status(200);
+
+})
+
+app.post("/plants/add/UT", async (req,res) => {
+    const plants = req.body;
+    const savedPlants = await Plant.ut.insertMany(plants);
+    res.json(savedPlants).status(200);
+})
+
+app.post("/plants/add/WY", async (req,res) => {
+    const plants = req.body;
+    const savedPlants = await Plant.wy.insertMany(plants);
+    res.json(savedPlants).status(200);;
+})
 
 //Edit Requests
 
