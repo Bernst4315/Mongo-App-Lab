@@ -23,12 +23,40 @@ app.get("/", (req,res) => {
     res.send("Server On")
 })
 
+app.get("/test", (req,res) => {
+    console.log(Plant)
+    res.json(Plant)
+})
 
-app.post("/plants", async (req,res) => {
-    const plant = new Plant ({
+app.post("/plants/NV", async (req,res) => {
+    const plant = new Plant.p1 ({
         plant_code: "YUBR",
         sci_name: "yucca brevifolia",
         state_habitat: "NV"
+    })
+ 
+    await plant.save();
+
+    res.json(plant).status(200);
+})
+
+app.post("/plants/UT", async (req,res) => {
+    const plant = new Plant.p2 ({
+        plant_code: "YUBR",
+        sci_name: "yucca brevifolia",
+        state_habitat: "UT"
+    })
+ 
+    await plant.save();
+
+    res.json(plant).status(200);
+})
+
+app.post("/plants/WY", async (req,res) => {
+    const plant = new Plant.p3 ({
+        plant_code: "YUBR",
+        sci_name: "yucca brevifolia",
+        state_habitat: "WY"
     })
  
     await plant.save();
