@@ -3,6 +3,7 @@ import { MongoClient, ObjectId } from "mongodb"
 import mongoose from "mongoose"; 
 import "dotenv/config";
 import db from "./plantsDb.mjs"
+import Plant from "./models/plants.js"
 
 const app = express();
 const port = 3000; 
@@ -22,25 +23,24 @@ app.get("/", (req,res) => {
     res.send("Server On")
 })
 
+
 app.post("/plants", async (req,res) => {
-    const collection = await db.collection("NV");
-    let newDoc = plants; 
+    const plant = new Plant ({
+        plant_code: "YUBR",
+        sci_name: "yucca brevifolia"
+    })
+ 
+    await plant.save();
 
-    let results = await collection.insertOne(newDoc[0]);
-
-    res.json(results).status(200);
+    res.json(plant).status(200);
 })
 
 app.delete("/plants/:id", async (req,res) => {
-    const query = {_id: new ObjectId(req.params.id)}
-    const collection = await db.collection("NV");
-    let result = await collection.findOneAndDelete(query);
-    res.send(result).status(200);
+    await Plant.findByIdAndDelete(req.params.id);  
+    res.json("plant removed").status(200)
 })
 
 app.get("/plants/NV", async (req,res) => {
-    const collection = await db.collection("NV");
-    let results = await collection.find().toArray();
-
-    res.send(results).status(200);
+  const plant = await Plant.find();
+  res.json(plant).status(200);
 })
