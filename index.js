@@ -1,15 +1,14 @@
 import express from "express";
-import { MongoClient, ObjectId } from "mongodb"
 import mongoose from "mongoose"; 
 import "dotenv/config";
-import db from "./plantsDb.mjs"
+
 import Plant from "./models/plants.js";
 import plantdb from "./plantDatabase.js";
 
 const app = express();
 const port = 3000; 
 const connectStr = process.env.MONGO_URI
-//const client = new MongoClient(connectStr); 
+
 mongoose.connect(connectStr);
 
 app.use(express.json()); 
@@ -22,16 +21,25 @@ app.get("/", (req,res) => {
     res.send("Server On")
 })
 
-app.get("/test", (req,res) => {
-    console.log(Plant)
-    res.json(Plant)
+app.get("/plants", async (req,res) => {
+  const plant = await Plant.find();
+  res.json(plant).status(200);
 })
 
-app.post("/plants/NV", async (req,res) => {
+app.get("/test", async (req,res) => {
     
+    const result = await Plant.nv.find();
+    const result1 = await Plant.ut.find();
+    const result2 = await Plant.wy.find();
+    //console.log(Plant.nv)
+    res.json({result, result1, result2}).status(200);
+})
+
+//Post Requests
+
+app.post("/plants/NV", async (req,res) => {
     const plants = plantdb.plantsNV;
     const savedPlants = await Plant.nv.insertMany(plants);
-
     res.json(savedPlants).status(200);
 
 })
@@ -39,30 +47,46 @@ app.post("/plants/NV", async (req,res) => {
 app.post("/plants/UT", async (req,res) => {
     const plants = plantdb.plantsUT;
     const savedPlants = await Plant.ut.insertMany(plants);
-
     res.json(savedPlants).status(200);
 })
 
 app.post("/plants/WY", async (req,res) => {
     const plants = plantdb.plantsWY;
     const savedPlants = await Plant.wy.insertMany(plants);
-
     res.json(savedPlants).status(200);;
 })
 
 
+//Edit Requests
 
-app.get("/plants", async (req,res) => {
-  const plant = await Plant.find();
-  res.json(plant).status(200);
+app.patch("/plants/NV/:id", async (req,res) => {
+    await Plant.nv.findByIdAndUpdate(req.params.id, req.body);  
+    res.json("plant updated").status(200)
 })
 
-app.delete("/plants/:id", async (req,res) => {
-    await Plant.findByIdAndDelete(req.params.id);  
-    res.json("plant removed").status(200)
+app.patch("/plants/UT/:id", async (req,res) => {
+    await Plant.ut.findByIdAndUpdate(req.params.id, req.body);  
+    res.json("plant updated").status(200)
 })
 
-app.patch("/plants/:id", async (req,res) => {
-    await Plant.findByIdAndUpdate(req.params.id, req.body);  
+app.patch("/plants/WY/:id", async (req,res) => {
+    await Plant.wy.findByIdAndUpdate(req.params.id, req.body);  
+    res.json("plant updated").status(200)
+})
+
+//Delete Requests
+    
+app.delete("/plants/NV/:id", async (req,res) => {
+    await Plant.nv.findByIdAndUpdate(req.params.id, req.body);  
+    res.json("plant updated").status(200)
+})
+
+app.delete("/plants/UT/:id", async (req,res) => {
+    await Plant.ut.findByIdAndUpdate(req.params.id, req.body);  
+    res.json("plant updated").status(200)
+})
+
+app.delete("/plants/WY/:id", async (req,res) => {
+    await Plant.wy.findByIdAndUpdate(req.params.id, req.body);  
     res.json("plant updated").status(200)
 })
