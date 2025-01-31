@@ -77,16 +77,16 @@ app.patch("/plants/WY/:id", async (req,res) => {
 //Delete Requests
     
 app.delete("/plants/NV/:id", async (req,res) => {
-    await Plant.nv.findByIdAndUpdate(req.params.id, req.body);  
+    await Plant.nv.findByIdAndDelete(req.params.id);  
     res.json("plant updated").status(200)
 })
 
 app.delete("/plants/UT/:id", async (req,res) => {
-    await Plant.ut.findByIdAndUpdate(req.params.id, req.body);  
+    await Plant.ut.findByIdAndDelete(req.params.id);  
     res.json("plant updated").status(200)
 })
 
 app.delete("/plants/WY/:id", async (req,res) => {
-    await Plant.wy.findByIdAndUpdate(req.params.id, req.body);  
+    await Plant.wy.findByIdAndDelete(req.params.id);  
     res.json("plant updated").status(200)
 })
