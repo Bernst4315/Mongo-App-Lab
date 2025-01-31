@@ -21,10 +21,10 @@ const plantSchema = new mongoose.Schema({
         required: false, 
     },
 
-    // state_habitat: {
-    //     type: String,
-    //     required: true, 
-    // }
+    state_habitat: {
+        type: String,
+        required: true, 
+    }
 
 })
 
