@@ -30,40 +30,65 @@ app.get("/", async (req,res) => {
 
 app.post("/plants/NV", async (req,res) => {
     const plants = plantdb.plantsNV;
-    const savedPlants = await Plant.nv.insertMany(plants);
-    res.json(savedPlants).status(200);
-
+    await Plant.nv.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
 })
 
 app.post("/plants/UT", async (req,res) => {
     const plants = plantdb.plantsUT;
-    const savedPlants = await Plant.ut.insertMany(plants);
-    res.json(savedPlants).status(200);
+     await Plant.ut.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
 })
 
 app.post("/plants/WY", async (req,res) => {
     const plants = plantdb.plantsWY;
-    const savedPlants = await Plant.wy.insertMany(plants);
-    res.json(savedPlants).status(200);;
+    await Plant.wy.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
+
 })
+
+//User Input 
 
 app.post("/plants/add/NV", async (req,res) => {
     const plants = req.body;
-    const savedPlants = await Plant.nv.insertMany(plants);
-    res.json(savedPlants).status(200);
-
+   await Plant.nv.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
 })
 
 app.post("/plants/add/UT", async (req,res) => {
     const plants = req.body;
-    const savedPlants = await Plant.ut.insertMany(plants);
-    res.json(savedPlants).status(200);
+    await Plant.ut.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
 })
 
 app.post("/plants/add/WY", async (req,res) => {
     const plants = req.body;
-    const savedPlants = await Plant.wy.insertMany(plants);
-    res.json(savedPlants).status(200);;
+   await Plant.wy.insertMany(plants)
+    .then(savedPlants => {res.json(savedPlants).status(200)})
+    .catch(err => {
+        console.log(err + " Error has occured");
+        res.json(err).status(404);
+    });
 })
 
 //Edit Requests

@@ -28,7 +28,8 @@ const plantSchema = new mongoose.Schema({
 
 })
 
-export default { nv: mongoose.model("plant", plantSchema, "plantsNV"), 
+export default {
+    nv: mongoose.model("plant", plantSchema, "plantsNV"), 
     ut: mongoose.model("plant", plantSchema, "plantsUT"),
     wy: mongoose.model("plant", plantSchema, "plantsWY")
 }
